@@ -1,0 +1,30 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Not found — Ruslan Khairullin">
+  <main class="not-found">
+    <p>404</p>
+    <a href="/">Back to portfolio</a>
+  </main>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    min-height: 100vh;
+    place-content: center;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .not-found p {
+    margin: 0;
+    font-size: 64px;
+  }
+
+  .not-found a {
+    color: inherit;
+  }
+</style>
+

@@ -1,0 +1,464 @@
+---
+interface Props {
+  variant: 'dovodo' | 'payment' | 'split';
+}
+
+type ProcessText = 'in process' | '-';
+type RegionType = 'full' | 'fragment' | 'bridge';
+
+interface ProcessToken {
+  text: ProcessText;
+  gap: 0 | 10;
+}
+
+interface RegionConfig {
+  id: string;
+  type: RegionType;
+  fromToken: number;
+  toToken?: number;
+  x?: number;
+  width?: number;
+  initialVisible: boolean;
+}
+
+const { variant } = Astro.props;
+
+// The text stays flat and readable. Its irregular rhythm is derived from the
+// accidental 10 px gaps in Figma node 166:12088, without preserving its nested frames.
+const tokens: ProcessToken[] = [
+  { text: 'in process', gap: 0 },
+  { text: '-', gap: 0 },
+  { text: 'in process', gap: 0 },
+  { text: '-', gap: 0 },
+  { text: 'in process', gap: 0 },
+  { text: 'in process', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 0 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 0 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 0 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 0 },
+  { text: 'in process', gap: 10 },
+  { text: 'in process', gap: 10 },
+  { text: '-', gap: 10 },
+];
+
+// Deterministic visual seed based on the filled, fragmented and bridged areas
+// visible in Figma. Motion mutates this state, but reloads always begin here.
+const regions: RegionConfig[] = [
+  { id: 'r00', type: 'full', fromToken: 0, initialVisible: true },
+  { id: 'r01', type: 'fragment', fromToken: 2, x: 0.62, width: 0.2, initialVisible: false },
+  { id: 'r02', type: 'bridge', fromToken: 4, toToken: 5, initialVisible: true },
+  { id: 'r03', type: 'full', fromToken: 6, initialVisible: false },
+  { id: 'r04', type: 'fragment', fromToken: 7, x: 0.15, width: 0.38, initialVisible: true },
+  { id: 'r05', type: 'bridge', fromToken: 8, toToken: 10, initialVisible: true },
+  { id: 'r06', type: 'fragment', fromToken: 10, x: 0.7, width: 0.18, initialVisible: false },
+  { id: 'r07', type: 'full', fromToken: 13, initialVisible: true },
+  { id: 'r08', type: 'bridge', fromToken: 14, toToken: 15, initialVisible: false },
+  { id: 'r09', type: 'fragment', fromToken: 17, x: 0.5, width: 0.12, initialVisible: true },
+  { id: 'r10', type: 'bridge', fromToken: 18, toToken: 20, initialVisible: true },
+  { id: 'r11', type: 'full', fromToken: 21, initialVisible: false },
+  { id: 'r12', type: 'fragment', fromToken: 24, x: 0.18, width: 0.34, initialVisible: true },
+  { id: 'r13', type: 'bridge', fromToken: 24, toToken: 26, initialVisible: false },
+  { id: 'r14', type: 'full', fromToken: 27, initialVisible: true },
+  { id: 'r15', type: 'fragment', fromToken: 28, x: 0.62, width: 0.24, initialVisible: true },
+  { id: 'r16', type: 'bridge', fromToken: 29, toToken: 31, initialVisible: true },
+  { id: 'r17', type: 'fragment', fromToken: 33, x: 0.05, width: 0.52, initialVisible: false },
+  { id: 'r18', type: 'full', fromToken: 34, initialVisible: true },
+  { id: 'r19', type: 'bridge', fromToken: 34, toToken: 35, initialVisible: false },
+];
+
+const seeds = {
+  dovodo: 'progress-dovodo-166-12088',
+  payment: 'progress-payment-166-12088',
+  split: 'progress-split-166-12088',
+} as const;
+---
+
+<div class:list={['progress-ribbon', `progress-ribbon--${variant}`]}>
+  <div class="progress-ribbon__backdrop" aria-hidden="true"></div>
+
+  <div class="process-strip" data-process-strip data-seed={seeds[variant]}>
+    {
+      tokens.map((token, index) => (
+        <span
+          class:list={['process-token', token.text === '-' && 'separator']}
+          data-process-token={index}
+          style={`--token-gap: ${token.gap}px;`}
+        >
+          {token.text}
+        </span>
+      ))
+    }
+
+    <div class="process-fill-layer" aria-hidden="true">
+      {
+        regions.map((region) => (
+          <span
+            class:list={['process-region', `process-region--${region.type}`]}
+            data-process-region={region.id}
+            data-region-type={region.type}
+            data-region-from={region.fromToken}
+            data-region-to={region.toToken ?? region.fromToken}
+            data-region-x={region.x ?? 0}
+            data-region-width={region.width ?? 1}
+            data-initial-visible={region.initialVisible ? 'true' : 'false'}
+          >
+            <span
+              class="process-region__fill"
+              style={`transform: translateX(${region.initialVisible ? '0%' : '-105%'});`}
+            ></span>
+          </span>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  type RegionState = 'hidden-left' | 'visible' | 'exiting-right' | 'hidden';
+
+  interface AnimatedRegion {
+    wrapper: HTMLElement;
+    fill: HTMLElement;
+    state: RegionState;
+    animation: Animation | null;
+  }
+
+  const CORE_EASING = 'cubic-bezier(0, 1, 0.57, 0.97)';
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const hashSeed = (value: string) => {
+    let hash = 2166136261;
+
+    for (let index = 0; index < value.length; index += 1) {
+      hash ^= value.charCodeAt(index);
+      hash = Math.imul(hash, 16777619);
+    }
+
+    return hash >>> 0;
+  };
+
+  const createPrng = (seedValue: string) => {
+    let seed = hashSeed(seedValue);
+
+    return () => {
+      seed += 0x6d2b79f5;
+      let value = seed;
+      value = Math.imul(value ^ (value >>> 15), value | 1);
+      value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+      return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+    };
+  };
+
+  class ProcessStripController {
+    readonly strip: HTMLElement;
+    readonly hoverTarget: HTMLElement;
+    readonly tokens: HTMLElement[];
+    readonly regions: AnimatedRegion[];
+    readonly random: () => number;
+    private hovering = false;
+    private mutationTimer: number | undefined;
+
+    constructor(strip: HTMLElement) {
+      this.strip = strip;
+      this.hoverTarget = strip.closest<HTMLElement>('.project-card') ?? strip;
+      this.tokens = Array.from(strip.querySelectorAll<HTMLElement>('[data-process-token]'));
+      this.regions = Array.from(strip.querySelectorAll<HTMLElement>('[data-process-region]'))
+        .flatMap((wrapper): AnimatedRegion[] => {
+          const fill = wrapper.querySelector<HTMLElement>('.process-region__fill');
+          if (!fill) return [];
+
+          return [
+            {
+              wrapper,
+              fill,
+              state: wrapper.dataset.initialVisible === 'true' ? 'visible' : 'hidden-left',
+              animation: null,
+            },
+          ];
+        });
+      this.random = createPrng(strip.dataset.seed ?? 'progress-166-12088');
+
+      this.measureRegions();
+
+      if (!reducedMotion.matches) {
+        this.hoverTarget.addEventListener('pointerenter', this.handlePointerEnter);
+        this.hoverTarget.addEventListener('pointerleave', this.handlePointerLeave);
+      }
+    }
+
+    measureRegions = () => {
+      const stripRect = this.strip.getBoundingClientRect();
+      const tokenRects = this.tokens.map((token) => token.getBoundingClientRect());
+
+      for (const region of this.regions) {
+        const fromIndex = Number(region.wrapper.dataset.regionFrom);
+        const toIndex = Number(region.wrapper.dataset.regionTo);
+        const startRect = tokenRects[fromIndex];
+        const endRect = tokenRects[toIndex];
+        if (!startRect || !endRect) continue;
+
+        const type = region.wrapper.dataset.regionType;
+        let left = startRect.left - stripRect.left;
+        let width = endRect.right - startRect.left;
+
+        if (type === 'fragment') {
+          const start = Number(region.wrapper.dataset.regionX);
+          const fragmentWidth = Number(region.wrapper.dataset.regionWidth);
+          left += startRect.width * start;
+          width = startRect.width * fragmentWidth;
+        }
+
+        region.wrapper.style.left = `${left}px`;
+        region.wrapper.style.width = `${Math.max(2, width)}px`;
+      }
+    };
+
+    private duration = () => 180 + Math.round(this.random() * 140);
+    private holdDuration = () => 80 + Math.round(this.random() * 420);
+
+    private finishAt = (region: AnimatedRegion, transform: string, state: RegionState) => {
+      region.fill.style.transform = transform;
+      region.fill.style.willChange = 'auto';
+      region.animation?.cancel();
+      region.animation = null;
+      region.state = state;
+    };
+
+    private enter = (region: AnimatedRegion, delay: number) => {
+      region.fill.style.willChange = 'transform';
+      const animation = region.fill.animate(
+        [{ transform: 'translateX(-105%)' }, { transform: 'translateX(0%)' }],
+        { duration: this.duration(), delay, easing: CORE_EASING, fill: 'forwards' },
+      );
+
+      region.animation = animation;
+      animation.onfinish = () => this.finishAt(region, 'translateX(0%)', 'visible');
+    };
+
+    private exit = (region: AnimatedRegion, delay: number) => {
+      region.state = 'exiting-right';
+      region.fill.style.willChange = 'transform';
+      const animation = region.fill.animate(
+        [{ transform: 'translateX(0%)' }, { transform: 'translateX(105%)' }],
+        { duration: this.duration(), delay, easing: CORE_EASING, fill: 'forwards' },
+      );
+
+      region.animation = animation;
+      animation.onfinish = () => this.finishAt(region, 'translateX(-105%)', 'hidden');
+    };
+
+    private sweep = (region: AnimatedRegion, delay: number) => {
+      region.fill.style.willChange = 'transform';
+      const enterDuration = this.duration();
+      const holdDuration = this.holdDuration();
+      const exitDuration = this.duration();
+      const totalDuration = enterDuration + holdDuration + exitDuration;
+      const enterOffset = enterDuration / totalDuration;
+      const holdOffset = (enterDuration + holdDuration) / totalDuration;
+      const animation = region.fill.animate(
+        [
+          { transform: 'translateX(-105%)', offset: 0, easing: CORE_EASING },
+          { transform: 'translateX(0%)', offset: enterOffset, easing: 'linear' },
+          { transform: 'translateX(0%)', offset: holdOffset, easing: CORE_EASING },
+          { transform: 'translateX(105%)', offset: 1 },
+        ],
+        { duration: totalDuration, delay, fill: 'forwards' },
+      );
+
+      region.animation = animation;
+      animation.onfinish = () => this.finishAt(region, 'translateX(-105%)', 'hidden');
+    };
+
+    private mutate = (region: AnimatedRegion, delay: number) => {
+      if (region.animation) return;
+
+      if (region.state === 'visible') {
+        if (this.random() < 0.7) this.exit(region, delay);
+        return;
+      }
+
+      if (this.random() < 0.64) {
+        this.enter(region, delay);
+      } else {
+        this.sweep(region, delay);
+      }
+    };
+
+    private burst = () => {
+      const available = this.regions.filter((region) => !region.animation);
+      const participation = 0.55 + this.random() * 0.25;
+      const count = Math.max(1, Math.round(available.length * participation));
+
+      for (let index = available.length - 1; index > 0; index -= 1) {
+        const swapIndex = Math.floor(this.random() * (index + 1));
+        const current = available[index];
+        const replacement = available[swapIndex];
+        if (!current || !replacement) continue;
+        available[index] = replacement;
+        available[swapIndex] = current;
+      }
+
+      available.slice(0, count).forEach((region, index) => {
+        const staggerBase = count > 1 ? (index / (count - 1)) * 196 : 0;
+        const delay = Math.round(staggerBase + this.random() * 24);
+        this.mutate(region, delay);
+      });
+    };
+
+    private scheduleNextBurst = () => {
+      if (!this.hovering) return;
+      const pause = 350 + Math.round(this.random() * 750);
+
+      this.mutationTimer = window.setTimeout(() => {
+        if (!this.hovering) return;
+        this.burst();
+        this.scheduleNextBurst();
+      }, pause);
+    };
+
+    private handlePointerEnter = () => {
+      if (this.hovering) return;
+      this.hovering = true;
+      this.burst();
+      this.scheduleNextBurst();
+    };
+
+    private handlePointerLeave = () => {
+      this.hovering = false;
+
+      if (this.mutationTimer !== undefined) {
+        window.clearTimeout(this.mutationTimer);
+        this.mutationTimer = undefined;
+      }
+    };
+  }
+
+  const controllers = Array.from(document.querySelectorAll<HTMLElement>('[data-process-strip]')).map(
+    (strip) => new ProcessStripController(strip),
+  );
+
+  const resizeObserver = new ResizeObserver(() => {
+    for (const controller of controllers) controller.measureRegions();
+  });
+
+  for (const controller of controllers) resizeObserver.observe(controller.strip);
+  document.fonts.ready.then(() => {
+    for (const controller of controllers) controller.measureRegions();
+  });
+</script>
+
+<style>
+  .progress-ribbon {
+    --ribbon-backdrop: rgba(255, 255, 255, 0.17);
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .progress-ribbon--payment {
+    --ribbon-backdrop: rgba(0, 0, 0, 0.17);
+  }
+
+  .progress-ribbon__backdrop {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    left: 0;
+    height: 58px;
+    background: var(--ribbon-backdrop);
+    backdrop-filter: blur(12px);
+    transform: translateY(-50%);
+  }
+
+  .progress-ribbon--split .progress-ribbon__backdrop {
+    height: 63px;
+    backdrop-filter: blur(8px);
+  }
+
+  .process-strip {
+    position: absolute;
+    top: calc(50% - 8.5px);
+    left: 0;
+    display: flex;
+    width: max-content;
+    height: 17px;
+    align-items: center;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.56px;
+    white-space: nowrap;
+    pointer-events: auto;
+  }
+
+  .progress-ribbon--payment .process-strip {
+    left: -52px;
+  }
+
+  .process-token {
+    position: relative;
+    display: inline-flex;
+    height: 17px;
+    flex: 0 0 auto;
+    align-items: center;
+    justify-content: center;
+    margin-left: var(--token-gap);
+    color: #fff;
+    mix-blend-mode: difference;
+  }
+
+  .separator {
+    min-width: 6px;
+  }
+
+  .process-fill-layer {
+    position: absolute;
+    inset: 0;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .process-region {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 17px;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .process-region__fill {
+    position: absolute;
+    inset: 0;
+    display: block;
+    background: #fff;
+    mix-blend-mode: difference;
+  }
+</style>

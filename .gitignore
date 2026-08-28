@@ -1,0 +1,8 @@
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.wrangler/
+.lh/
+.DS_Store
+*.log

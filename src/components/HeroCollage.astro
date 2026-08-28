@@ -1,0 +1,328 @@
+---
+import astronaut from '@/assets/hero/astronaut.png';
+import editorial from '@/assets/hero/editorial.png';
+import flower from '@/assets/hero/flower.png';
+import light from '@/assets/hero/light.svg';
+import logo from '@/assets/hero/logo.svg';
+import logoDetail from '@/assets/hero/logo-detail.svg';
+import phoneCards from '@/assets/hero/phone-cards.png';
+import phoneProfile from '@/assets/hero/phone-profile.png';
+import phoneSkill from '@/assets/hero/phone-skill.png';
+import postBack from '@/assets/hero/post-back.png';
+import postFront from '@/assets/hero/post-front.png';
+import postGlow from '@/assets/hero/post-glow.svg';
+import posterCalibrate from '@/assets/hero/poster-calibrate.png';
+import posterGeometry from '@/assets/hero/poster-geometry.jpg';
+import posterSymbols from '@/assets/hero/poster-symbols.jpg';
+---
+
+<section class="hero-collage" data-parallax-root aria-label="Selected product and visual design work">
+  <span class="hero-layer__fade" aria-hidden="true"></span>
+
+  <div class="hero-layer hero-layer--light" data-parallax data-depth="3" aria-hidden="true">
+    <img src={light.src} alt="" />
+  </div>
+
+  <div class="hero-layer hero-layer--astronaut" data-parallax data-depth="5">
+    <div class="hero-layer__crop hero-layer__crop--astronaut">
+      <img src={astronaut.src} alt="" fetchpriority="high" />
+    </div>
+  </div>
+
+  <div class="hero-layer hero-layer--editorial" data-parallax data-depth="7">
+    <img src={editorial.src} alt="" fetchpriority="high" />
+  </div>
+
+  <div class="hero-layer hero-layer--phone-profile" data-parallax data-depth="15">
+    <div class="hero-layer__crop hero-layer__crop--profile">
+      <img src={phoneProfile.src} alt="" fetchpriority="high" />
+    </div>
+  </div>
+
+  <div class="hero-layer hero-layer--logo" data-parallax data-depth="10" aria-hidden="true">
+    <img class="hero-layer__logo-main" src={logo.src} alt="" />
+    <img class="hero-layer__logo-detail" src={logoDetail.src} alt="" />
+  </div>
+
+  <div class="hero-layer hero-layer--phone-cards" data-parallax data-depth="18">
+    <div class="hero-layer__crop hero-layer__crop--cards">
+      <img src={phoneCards.src} alt="" />
+    </div>
+  </div>
+
+  <div class="hero-layer hero-layer--poster-calibrate" data-parallax data-depth="17">
+    <img src={posterCalibrate.src} alt="" loading="lazy" />
+  </div>
+
+  <div class="hero-layer hero-layer--flower" data-parallax data-depth="6">
+    <img src={flower.src} alt="" loading="lazy" />
+  </div>
+
+  <div class="hero-layer hero-layer--posts" data-parallax data-depth="14">
+    <img class="hero-layer__post-glow" src={postGlow.src} alt="" loading="lazy" />
+    <img class="hero-layer__post-front" src={postFront.src} alt="" loading="lazy" />
+    <img class="hero-layer__post-back" src={postBack.src} alt="" loading="lazy" />
+  </div>
+
+  <div class="hero-layer hero-layer--phone-skill" data-parallax data-depth="19">
+    <img src={phoneSkill.src} alt="" loading="lazy" />
+  </div>
+
+  <div class="hero-layer hero-layer--posters" data-parallax data-depth="16">
+    <img class="hero-layer__poster-geometry" src={posterGeometry.src} alt="" loading="lazy" />
+    <img class="hero-layer__poster-symbols" src={posterSymbols.src} alt="" loading="lazy" />
+  </div>
+</section>
+
+<script>
+  import '@/scripts/parallax';
+</script>
+
+<style>
+  .hero-collage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1440 / 2180;
+    overflow: clip;
+    isolation: isolate;
+    background: var(--background);
+  }
+
+  .hero-layer {
+    position: absolute;
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  .hero-layer img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .hero-layer__crop {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .hero-layer--light {
+    z-index: 4;
+    top: 9.725%;
+    left: 0.069%;
+    width: 99.931%;
+    height: 33.211%;
+  }
+
+  .hero-layer--light img {
+    position: absolute;
+    top: -24.46%;
+    left: -13.25%;
+    width: 126.5%;
+    height: 148.9%;
+    object-fit: fill;
+  }
+
+  .hero-layer--astronaut {
+    z-index: 2;
+    top: 0.023%;
+    left: 47.476%;
+    width: 52.455%;
+    height: 27.56%;
+  }
+
+  .hero-layer__crop--astronaut img {
+    position: absolute;
+    left: -21.25%;
+    width: 142.51%;
+  }
+
+  .hero-layer__fade {
+    position: absolute;
+    z-index: 3;
+    top: 0.023%;
+    left: 47.476%;
+    width: 52.455%;
+    height: 27.56%;
+    background: linear-gradient(to bottom, transparent 64.3%, var(--background) 100%);
+    pointer-events: none;
+  }
+
+  .hero-layer--editorial {
+    z-index: 4;
+    top: 23.129%;
+    left: 0.934%;
+    width: 72.774%;
+    height: 30.197%;
+    overflow: hidden;
+    border-radius: 1.111vw;
+  }
+
+  .hero-layer--phone-profile {
+    z-index: 6;
+    top: 4.233%;
+    left: 0.044%;
+    width: 28.471%;
+    height: 27.313%;
+  }
+
+  .hero-layer__crop--profile img {
+    position: absolute;
+    left: -0.12%;
+    width: 140.34%;
+  }
+
+  .hero-layer--logo {
+    z-index: 8;
+    top: 29.083%;
+    left: 78.578%;
+    width: 16.36%;
+    height: 3.322%;
+  }
+
+  .hero-layer__logo-main {
+    position: absolute;
+    inset: 0;
+    object-fit: fill;
+  }
+
+  .hero-layer__logo-detail {
+    position: absolute;
+    top: 1.4%;
+    right: 38.29%;
+    bottom: 1.54%;
+    left: 56.96%;
+    width: auto !important;
+    height: auto !important;
+    transform: rotate(-90deg);
+    object-fit: contain !important;
+  }
+
+  .hero-layer--phone-cards {
+    z-index: 9;
+    top: 33.44%;
+    left: 68.472%;
+    width: 24.359%;
+    height: 25.34%;
+  }
+
+  .hero-layer__crop--cards img {
+    position: absolute;
+    left: -38.53%;
+    width: 177.05%;
+  }
+
+  .hero-layer--poster-calibrate {
+    z-index: 11;
+    top: 51.084%;
+    left: -6.319%;
+    width: 27.235%;
+    height: 23.72%;
+  }
+
+  .hero-layer--poster-calibrate img {
+    position: absolute;
+    top: 4.75%;
+    left: 10.22%;
+    width: 79.56%;
+    height: 90.5%;
+    transform: rotate(-10.51deg);
+    object-fit: fill;
+  }
+
+  .hero-layer--flower {
+    z-index: 3;
+    top: 56.927%;
+    left: 9.038%;
+    width: 81.136%;
+    height: 26.909%;
+  }
+
+  .hero-layer--posts {
+    z-index: 10;
+    top: 56.927%;
+    left: 74.583%;
+    width: 21.003%;
+    height: 9.409%;
+  }
+
+  .hero-layer__post-glow {
+    position: absolute;
+    top: -56.7%;
+    left: -17%;
+    width: 83.5% !important;
+    height: 185% !important;
+    object-fit: fill !important;
+  }
+
+  .hero-layer__post-front {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 53.61% !important;
+    height: 79.05% !important;
+    border-radius: 0.833vw;
+  }
+
+  .hero-layer__post-back {
+    position: absolute;
+    top: 19.72%;
+    left: 45.56%;
+    width: 54.44% !important;
+    height: 80.27% !important;
+    border: 1px solid #454545;
+    border-radius: 0.833vw;
+  }
+
+  .hero-layer--phone-skill {
+    z-index: 9;
+    top: 71.33%;
+    left: 12.222%;
+    width: 17.418%;
+    height: 24.899%;
+  }
+
+  .hero-layer--phone-skill img {
+    border: 0.073vw solid #363636;
+    border-radius: 2.043vw;
+  }
+
+  .hero-layer--posters {
+    z-index: 8;
+    top: 70.367%;
+    left: 71.389%;
+    width: 23.704%;
+    height: 19.39%;
+  }
+
+  .hero-layer__poster-geometry,
+  .hero-layer__poster-symbols {
+    position: absolute;
+    object-fit: cover !important;
+  }
+
+  .hero-layer__poster-geometry {
+    top: 31.23%;
+    left: 0;
+    width: 59.62% !important;
+    height: 68.77% !important;
+  }
+
+  .hero-layer__poster-symbols {
+    top: 0;
+    left: 40.03%;
+    width: 59.98% !important;
+    height: 69.18% !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-layer {
+      transform: none !important;
+      will-change: auto;
+    }
+  }
+</style>

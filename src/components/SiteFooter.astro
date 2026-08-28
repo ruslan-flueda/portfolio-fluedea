@@ -1,0 +1,92 @@
+---
+import signature from '@/assets/footer-signature.svg';
+---
+
+<footer class="site-footer">
+  <a class="site-footer__contact" href="https://t.me/flueda" target="_blank" rel="noreferrer">
+    contact
+  </a>
+  <div class="site-footer__signature" aria-label="Ruslan Khairullin, August 2026">
+    <img class="site-footer__signature-mark" src={signature.src} alt="" loading="lazy" />
+    <div class="site-footer__signature-caption">
+      <span class="site-footer__signature-bracket" aria-hidden="true">r(</span>
+      <span>august 2026</span>
+      <span class="site-footer__signature-bracket site-footer__signature-bracket--end" aria-hidden="true">)k</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    display: flex;
+    min-height: 42.43vw;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 17.57vw;
+  }
+
+  .site-footer__contact {
+    display: flex;
+    width: clamp(200px, 16.667vw, 320px);
+    height: clamp(14px, 0.972vw, 19px);
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    background: var(--accent);
+    font-size: clamp(12px, 0.972vw, 17px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-decoration: none;
+    transition:
+      width 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      color 180ms ease,
+      background-color 180ms ease;
+  }
+
+  .site-footer__contact:hover,
+  .site-footer__contact:focus-visible {
+    width: clamp(230px, 19vw, 365px);
+    color: var(--accent);
+    background: #fff;
+    outline: none;
+  }
+
+  .site-footer__signature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14.167vw;
+  }
+
+  .site-footer__signature-mark {
+    display: block;
+    width: 10.833vw;
+    height: auto;
+  }
+
+  .site-footer__signature-caption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--copy);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: clamp(12px, 0.972vw, 17px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+    white-space: nowrap;
+  }
+
+  .site-footer__signature-bracket {
+    display: flex;
+    width: 9px;
+    align-items: center;
+    justify-content: center;
+    background: var(--accent);
+    mix-blend-mode: difference;
+  }
+
+  .site-footer__signature-bracket--end {
+    width: 11px;
+  }
+</style>

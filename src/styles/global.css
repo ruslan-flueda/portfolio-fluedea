@@ -1,0 +1,63 @@
+@font-face {
+  font-family: 'Ramabhadra Local';
+  src: url('../assets/fonts/Ramabhadra-Regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+  --background: #0a0a0a;
+  --chrome: #bac3cc;
+  --copy: #c4cdd6;
+  --accent: #ff0505;
+  font-family: Arial, Helvetica, sans-serif;
+  font-synthesis: none;
+  text-rendering: geometricPrecision;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  min-width: 900px;
+  background: var(--background);
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 900px;
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: clip;
+  color: var(--copy);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+::selection {
+  color: #fff;
+  background: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
