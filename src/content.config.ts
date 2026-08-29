@@ -12,7 +12,7 @@ const projects = defineCollection({
       order: z.number().int().positive(),
       size: z.enum(['wide', 'half']),
       cover: image(),
-      ribbon: z.enum(['dovodo', 'payment', 'split']).optional(),
+      ribbon: z.enum(['azimut', 'dovodo', 'payment', 'split']).optional(),
       href: z.string().optional(),
       published: z.boolean().default(true),
     }),

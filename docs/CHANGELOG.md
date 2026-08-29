@@ -1,5 +1,23 @@
 # Changelog
 
+## 2026-08-29
+
+- Updated the header Gmail destination to `rus01.khairullin@gmail.com` before the public deployment.
+- Replaced the generated red-dot favicon with the exact local PNG render of Figma node `201:16167`, preserving its cyan `R`, red block, black field, and blend-mode appearance.
+- Rolled back the experimental shared Figma Glass recreation and restored the previous lightweight translucent blurred backdrops for every `in process` ribbon; live text and hover mutation behavior are unchanged.
+- Applied the updated Figma Glass backdrop from node `150:11824` to every in-process project ribbon: unified the band at `63 px` and `12%` white, then recreated the source refraction/depth/dispersion with a clipped, smoothly stretched and filtered copy of each card's own cover while preserving the existing live-text animation.
+- Replaced the fourth T-bank / Beri Zaryad card with the updated-color Russian Design Cup composition from Figma node `150:11815`, storing its exact native `1402 × 700 px` cover locally and preserving the shared animated `split` process ribbon.
+- Isolated the footer contact's hover growth inside a fixed base-height layout slot and animated both width and height, allowing the button to reach `42 px` without moving the character or date block below.
+- Matched footer-caption typography to Figma node `150:11577`: added a local Inter Tight variable font for the bracket labels, switched `august 2026` to the existing local Ramabhadra Regular, and applied the source tracking and line-heights.
+- Added the Figma `197:16030` character-only hover state to the footer using the exact locally stored teeth vector from child `197:16049`; only the teeth opacity changes, leaving the existing drawing and footer layout fixed.
+- Marked Azimut as in process, added its own seeded instance of the shared animated process ribbon, and made project-card treatment state-driven: in-process projects show their ribbon, while a ready project with an `href` automatically restores the preserved centered `view` reveal.
+- Centered the Azimut `view` label explicitly on both axes inside its responsive reveal bar and matched its line-height to the footer contact treatment.
+- Matched the Azimut `view` reveal to the responsive base dimensions of `site-footer__contact` (`240 × 14 px` at 1440 px), while preserving the manually tuned `420 ms` expansion and fully hidden `0 px` resting width.
+- Rebuilt the centered Azimut `view` reveal from Figma node `183:12704`: white difference-blended `239 × 28 px` treatment, Helvetica Neue `14 px` label with `-0.56 px` tracking, and the source `211 ms` expansion curve; changed its resting width from the Figma motion's `1 px` to `0 px` so it is completely invisible outside hover/focus.
+- Replaced Azimut's removed pointer-following label with a fixed centered `239 × 28 px` `view` reveal: the black bar expands from a one-pixel center line over `420 ms`, then fades in its label after `90 ms`, with keyboard and reduced-motion parity.
+- Removed the Azimut-only pointer-following `view` label in full, including its markup, pointer listeners, cached card bounds, CSS variables, and trailing transitions; project cards now keep their original visuals on hover.
+- Removed the experimental top/bottom viewport distortion in full after visual review, including its component, runtime controller, page integration, and documented behavior; the portfolio is back to its original undistorted presentation.
+
 ## 2026-08-28
 
 - Expanded each progress-ribbon hover target from the `17 px` text strip to its entire project card; leaving the card now stops future mutation bursts while allowing active motion to finish.

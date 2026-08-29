@@ -20,12 +20,12 @@ Projects live in `src/content/projects/`. Images live in `src/assets/projects/<s
 - `order`: order on the homepage.
 - `size`: `wide` or `half`.
 - `cover`: local image path.
-- `ribbon`: optional status-layer layout: `dovodo`, `payment`, or `split`. Omit it for completed projects without a ribbon.
+- `ribbon`: optional status-layer layout and deterministic animation seed: `azimut`, `dovodo`, `payment`, or `split`.
 - `href`: optional future destination.
 - `published`: show or hide the card.
 
-Without `href`, a card has interaction feedback but no navigation. Adding `href` converts it into a normal link without changing the card component.
+Without `href`, a card has interaction feedback but no navigation. While `status` is `in-process`, its configured ribbon is shown and animated. To publish a finished case, set `status: ready` and add `href`; the grid then hides the ribbon, converts the card into a normal link, and restores the saved centered `view` reveal automatically.
 
 Export only the Figma `cover` frame at 2x. Do not bake the project caption or status ribbon into the image.
 
-The three ribbon values select positioning/backdrop treatment and a stable animation seed. The token sequence, decorative overlay geometry, and hover mutations are maintained centrally in `src/components/ProgressRibbon.astro`; they do not need to be copied into project frontmatter.
+The four ribbon values select positioning/backdrop treatment and a stable animation seed. The token sequence, decorative overlay geometry, and hover mutations are maintained centrally in `src/components/ProgressRibbon.astro`; they do not need to be copied into project frontmatter.

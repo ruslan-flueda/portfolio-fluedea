@@ -9,10 +9,13 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
 
 <section class="project-grid" aria-label="Selected projects">
   {
-    projects.map(({ data, id }) => {
+    projects.map(({ data }) => {
       const label = `${data.title} — ${data.description}. ${data.status === 'ready' ? 'Ready project' : 'In process'}.`;
       const CardElement = data.href ? 'a' : 'button';
-      const hasViewCursor = id === 'azimut';
+      const processRibbon = data.status === 'in-process' ? data.ribbon : undefined;
+      // The finished-case treatment is intentionally kept ready for future projects.
+      // Adding an href and changing status to `ready` swaps the ribbon for `view` automatically.
+      const hasViewReveal = data.status === 'ready' && Boolean(data.href);
 
       return (
         <CardElement
@@ -21,9 +24,8 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
           type={data.href ? undefined : 'button'}
           aria-label={data.href ? label : `${label} Case study coming soon.`}
           data-status={data.status}
-          data-view-cursor={hasViewCursor ? 'true' : undefined}
         >
-          <div class:list={['project-card__media', data.ribbon && `project-card__media--${data.ribbon}`]}>
+          <div class:list={['project-card__media', processRibbon && `project-card__media--${processRibbon}`]}>
             <img
               class="project-card__cover"
               src={data.cover.src}
@@ -32,45 +34,24 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
               height={data.cover.height}
               loading="lazy"
             />
-            {data.ribbon && <ProgressRibbon variant={data.ribbon} />}
+            {processRibbon && <ProgressRibbon variant={processRibbon} />}
+            {
+              hasViewReveal && (
+                <span class="project-view" aria-hidden="true">
+                  <span class="project-view__label">view</span>
+                </span>
+              )
+            }
           </div>
           <div class="project-card__caption">
             <span class="project-card__title">{data.title}</span>
             <span class="project-card__description">{data.description}</span>
           </div>
-          {hasViewCursor && <span class="project-card__view" aria-hidden="true">view</span>}
         </CardElement>
       );
     })
   }
 </section>
-
-<script>
-  const viewCards = document.querySelectorAll<HTMLElement>('[data-view-cursor]');
-  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-
-  if (!prefersReducedMotion.matches) {
-    for (const card of viewCards) {
-      let bounds: DOMRect | undefined;
-
-      const setCursorPosition = (event: PointerEvent) => {
-        bounds ??= card.getBoundingClientRect();
-        card.style.setProperty('--view-x', `${event.clientX - bounds.left}px`);
-        card.style.setProperty('--view-y', `${event.clientY - bounds.top}px`);
-      };
-
-      card.addEventListener('pointerenter', (event) => {
-        bounds = card.getBoundingClientRect();
-        setCursorPosition(event);
-      });
-
-      card.addEventListener('pointermove', setCursorPosition);
-      card.addEventListener('pointerleave', () => {
-        bounds = undefined;
-      });
-    }
-  }
-</script>
 
 <style>
   .project-grid {
@@ -124,6 +105,45 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
     height: auto;
   }
 
+  .project-view {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: clamp(14px, 0.972vw, 19px);
+    overflow: hidden;
+    background: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    transition: width 420ms cubic-bezier(0.84, 0, 0.31, 0.97);
+  }
+
+  .project-view__label {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: flex;
+    width: clamp(200px, 16.667vw, 320px);
+    height: clamp(14px, 0.972vw, 19px);
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.56px;
+    mix-blend-mode: difference;
+    text-align: center;
+    transform: translateX(-50%);
+    white-space: nowrap;
+  }
+
+  .project-card:is(:hover, :focus-visible) .project-view {
+    width: clamp(200px, 16.667vw, 320px);
+  }
+
   .project-card__caption {
     display: flex;
     height: 27px;
@@ -149,33 +169,6 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
     opacity: 0.6;
   }
 
-  .project-card__view {
-    position: absolute;
-    z-index: 2;
-    top: var(--view-y, 50%);
-    left: var(--view-x, 50%);
-    display: grid;
-    height: 17px;
-    padding: 0 2px;
-    color: #fff;
-    background: #000;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: clamp(12px, 0.972vw, 17px);
-    line-height: 1;
-    place-items: center;
-    opacity: 0;
-    pointer-events: none;
-    transform: translate3d(-50%, -50%, 0);
-    transition:
-      top 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      left 420ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 160ms ease;
-  }
-
-  .project-card[data-view-cursor]:hover .project-card__view {
-    opacity: 1;
-  }
-
   .project-card:focus-visible {
     z-index: 1;
     outline: none;
@@ -190,8 +183,9 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .project-card__view {
-      transition: opacity 120ms linear;
+    .project-view {
+      transition: none;
     }
   }
+
 </style>

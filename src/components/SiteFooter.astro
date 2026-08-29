@@ -1,16 +1,28 @@
 ---
 import signature from '@/assets/footer-signature.svg';
+import signatureTeeth from '@/assets/footer-signature-teeth.svg';
 ---
 
 <footer class="site-footer">
-  <a class="site-footer__contact" href="https://t.me/flueda" target="_blank" rel="noreferrer">
-    contact
-  </a>
+  <div class="site-footer__contact-slot">
+    <a class="site-footer__contact" href="https://t.me/flueda" target="_blank" rel="noreferrer">
+      contact
+    </a>
+  </div>
   <div class="site-footer__signature" aria-label="Ruslan Khairullin, August 2026">
-    <img class="site-footer__signature-mark" src={signature.src} alt="" loading="lazy" />
+    <div class="site-footer__signature-mark" aria-hidden="true">
+      <img class="site-footer__signature-mark-base" src={signature.src} alt="" loading="lazy" />
+      <span class="site-footer__signature-character">
+        <span class="site-footer__signature-teeth-frame">
+          <span class="site-footer__signature-teeth-rotation">
+            <img class="site-footer__signature-teeth" src={signatureTeeth.src} alt="" />
+          </span>
+        </span>
+      </span>
+    </div>
     <div class="site-footer__signature-caption">
       <span class="site-footer__signature-bracket" aria-hidden="true">r(</span>
-      <span>august 2026</span>
+      <span class="site-footer__signature-date">august 2026</span>
       <span class="site-footer__signature-bracket site-footer__signature-bracket--end" aria-hidden="true">)k</span>
     </div>
   </div>
@@ -25,7 +37,17 @@ import signature from '@/assets/footer-signature.svg';
     padding-top: 17.57vw;
   }
 
+  .site-footer__contact-slot {
+    position: relative;
+    width: 100%;
+    height: clamp(14px, 0.972vw, 19px);
+    flex: 0 0 auto;
+  }
+
   .site-footer__contact {
+    position: absolute;
+    top: 50%;
+    left: 50%;
     display: flex;
     width: clamp(200px, 16.667vw, 320px);
     height: clamp(14px, 0.972vw, 19px);
@@ -37,8 +59,10 @@ import signature from '@/assets/footer-signature.svg';
     line-height: 1;
     letter-spacing: -0.04em;
     text-decoration: none;
+    transform: translate(-50%, -50%);
     transition:
       width 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
+      height 260ms cubic-bezier(0.2, 0.7, 0.2, 1),
       color 180ms ease,
       background-color 180ms ease;
   }
@@ -46,6 +70,7 @@ import signature from '@/assets/footer-signature.svg';
   .site-footer__contact:hover,
   .site-footer__contact:focus-visible {
     width: clamp(230px, 19vw, 365px);
+    height: 42px;
     color: var(--accent);
     background: #fff;
     outline: none;
@@ -60,9 +85,59 @@ import signature from '@/assets/footer-signature.svg';
   }
 
   .site-footer__signature-mark {
-    display: block;
+    position: relative;
     width: 10.833vw;
-    height: auto;
+    aspect-ratio: 156 / 70;
+  }
+
+  .site-footer__signature-mark-base {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .site-footer__signature-character {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 45.215%;
+    height: 90.09%;
+  }
+
+  .site-footer__signature-teeth-frame {
+    position: absolute;
+    top: 59.941%;
+    left: 47.624%;
+    display: flex;
+    width: 21.738%;
+    height: 19.231%;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 120ms ease;
+  }
+
+  .site-footer__signature-teeth-rotation {
+    position: relative;
+    display: block;
+    width: 88.059%;
+    height: 74.563%;
+    transform: rotate(-14.46deg);
+  }
+
+  .site-footer__signature-teeth {
+    position: absolute;
+    top: -5.51%;
+    left: -3.71%;
+    display: block;
+    width: 107.41%;
+    height: 111.06%;
+  }
+
+  .site-footer__signature-character:hover .site-footer__signature-teeth-frame {
+    opacity: 1;
   }
 
   .site-footer__signature-caption {
@@ -70,11 +145,18 @@ import signature from '@/assets/footer-signature.svg';
     align-items: center;
     gap: 8px;
     color: var(--copy);
-    font-family: Arial, Helvetica, sans-serif;
     font-size: clamp(12px, 0.972vw, 17px);
     line-height: 1;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.56px;
     white-space: nowrap;
+  }
+
+  .site-footer__signature-date {
+    font-family: 'Ramabhadra Local', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 0.9922;
+    mix-blend-mode: difference;
+    text-align: center;
   }
 
   .site-footer__signature-bracket {
@@ -83,10 +165,20 @@ import signature from '@/assets/footer-signature.svg';
     align-items: center;
     justify-content: center;
     background: var(--accent);
+    font-family: 'Inter Tight Local', Arial, sans-serif;
+    font-weight: 400;
+    line-height: 1;
     mix-blend-mode: difference;
+    text-align: center;
   }
 
   .site-footer__signature-bracket--end {
     width: 11px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-footer__signature-teeth-frame {
+      transition: none;
+    }
   }
 </style>

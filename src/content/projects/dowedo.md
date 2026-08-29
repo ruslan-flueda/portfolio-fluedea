@@ -1,6 +1,6 @@
 ---
-title: Dovodo
-description: Product & management
+title: Dowedo
+description: Product design & strategy
 status: in-process
 order: 2
 size: half
