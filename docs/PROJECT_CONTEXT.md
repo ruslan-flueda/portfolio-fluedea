@@ -55,6 +55,7 @@ Build Ruslan Khairullin's English-only product-design portfolio from the latest 
 
 - `astro check`: zero errors, warnings, or hints.
 - Production build: successful static output for `/` and `/404.html`.
+- GitHub Pages production workflow: successful at `https://ruslan-flueda.github.io/portfolio-fluedea/`; pnpm is pinned to `11.19.0` for reproducible future deployments.
 - Browser QA viewport: 1440 x 900 px.
 - Rendered page width: 1440 px; rendered height: 5134 px (equal to the Figma reference frame).
 - Local Ramabhadra font, live time, project controls, contact links, reduced-motion fallbacks, independent parallax transforms, and deterministic status-strip mutation verified in the browser.

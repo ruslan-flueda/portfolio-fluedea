@@ -2,6 +2,7 @@
 
 ## 2026-08-29
 
+- Pinned pnpm `11.19.0` after the first successful GitHub Pages release so subsequent automated builds no longer depend on an unspecified latest package-manager version.
 - Corrected the newly added GitHub Pages workflow to build the Astro project with the official `withastro/action`, publish the generated site rather than repository sources, and configured the `/portfolio-fluedea/` base path plus base-aware favicon and 404 links.
 - Updated the header Gmail destination to `rus01.khairullin@gmail.com` before the public deployment.
 - Replaced the generated red-dot favicon with the exact local PNG render of Figma node `201:16167`, preserving its cyan `R`, red block, black field, and blend-mode appearance.
