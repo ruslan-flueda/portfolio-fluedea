@@ -1,11 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const homeHref = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
 ---
 
 <BaseLayout title="Not found — Ruslan Khairullin">
   <main class="not-found">
     <p>404</p>
-    <a href="/">Back to portfolio</a>
+    <a href={homeHref}>Back to portfolio</a>
   </main>
 </BaseLayout>
 
@@ -27,4 +29,3 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
     color: inherit;
   }
 </style>
-

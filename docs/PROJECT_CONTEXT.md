@@ -42,7 +42,7 @@ Build Ruslan Khairullin's English-only product-design portfolio from the latest 
 - Plain CSS and custom properties; no Tailwind runtime.
 - Astro content collection for project metadata.
 - Local Figma exports under `src/assets/`; production markup never depends on expiring Figma URLs.
-- Cloudflare Workers Static Assets, deployed from GitHub.
+- GitHub Pages static hosting at `https://ruslan-flueda.github.io/portfolio-fluedea/`, built and deployed from `main` by the official Astro GitHub Action. The existing Cloudflare Workers configuration remains available as an optional alternative.
 
 ## Quality constraints
 

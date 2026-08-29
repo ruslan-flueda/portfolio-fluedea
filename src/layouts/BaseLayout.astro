@@ -10,6 +10,9 @@ const {
   title = 'Ruslan Khairullin — Product Designer',
   description = 'Product designer focused on visual craft, interaction and creative direction.',
 } = Astro.props;
+
+const baseUrl = `${import.meta.env.BASE_URL.replace(/\/$/, '')}/`;
+const faviconHref = `${baseUrl}favicon.png`;
 ---
 
 <!doctype html>
@@ -20,7 +23,7 @@ const {
     <meta name="description" content={description} />
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="color-scheme" content="dark" />
-    <link rel="icon" type="image/png" sizes="328x328" href="/favicon.png" />
+    <link rel="icon" type="image/png" sizes="328x328" href={faviconHref} />
     <title>{title}</title>
   </head>
   <body>

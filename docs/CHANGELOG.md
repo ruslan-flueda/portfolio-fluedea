@@ -2,6 +2,7 @@
 
 ## 2026-08-29
 
+- Corrected the newly added GitHub Pages workflow to build the Astro project with the official `withastro/action`, publish the generated site rather than repository sources, and configured the `/portfolio-fluedea/` base path plus base-aware favicon and 404 links.
 - Updated the header Gmail destination to `rus01.khairullin@gmail.com` before the public deployment.
 - Replaced the generated red-dot favicon with the exact local PNG render of Figma node `201:16167`, preserving its cyan `R`, red block, black field, and blend-mode appearance.
 - Rolled back the experimental shared Figma Glass recreation and restored the previous lightweight translucent blurred backdrops for every `in process` ribbon; live text and hover mutation behavior are unchanged.

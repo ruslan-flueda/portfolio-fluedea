@@ -9,8 +9,8 @@ Projects live in `src/content/projects/`. Images live in `src/assets/projects/<s
 3. Add the project's exported artwork under `src/assets/projects/<slug>/`.
 4. Update the frontmatter fields.
 5. Run `pnpm check` and `pnpm build`.
-6. Push a branch to GitHub and inspect the Cloudflare preview.
-7. Merge to `main` to publish.
+6. Push a branch to GitHub and inspect the local production build.
+7. Merge to `main`; the GitHub Pages workflow builds and publishes the site automatically.
 
 ## Frontmatter
 
