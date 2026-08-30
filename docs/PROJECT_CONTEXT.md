@@ -1,6 +1,6 @@
 # Portfolio project context
 
-Last updated: 2026-08-29
+Last updated: 2026-08-30
 
 ## Goal
 
@@ -35,6 +35,7 @@ Build Ruslan Khairullin's English-only product-design portfolio from the latest 
 - The footer contact expands to its hover width and `42 px` height from the center. It is absolutely centered inside a fixed base-height layout slot, so the character, date caption, and overall footer flow do not move while the button animates.
 - Social destinations: Telegram `https://t.me/flueda`, Instagram `https://www.instagram.com/flueda1/`, email `mailto:rus01.khairullin@gmail.com`.
 - LinkedIn and CV controls remain hidden until destinations are supplied.
+- PostHog Web Analytics is initialized from the shared layout against the US cloud endpoint with anonymous-only profiles, pageview/page-leave capture, autocapture, and session replay enabled. Custom events cover first 50%-visible project impressions, three-second project engagement, visible project dwell segments, project clicks, contact destinations, 25/50/75/100% scroll milestones, and the first footer reach. Analytics does not alter layout or interaction behavior.
 
 ## Architecture
 
@@ -42,6 +43,7 @@ Build Ruslan Khairullin's English-only product-design portfolio from the latest 
 - Plain CSS and custom properties; no Tailwind runtime.
 - Astro content collection for project metadata.
 - Local Figma exports under `src/assets/`; production markup never depends on expiring Figma URLs.
+- The lightweight PostHog bootstrap lives in `src/layouts/BaseLayout.astro`; portfolio-specific event instrumentation lives in `src/scripts/analytics.ts` and uses DOM data attributes rather than component state.
 - GitHub Pages static hosting at `https://ruslan-flueda.github.io/portfolio-fluedea/`, built and deployed from `main` by the official Astro GitHub Action. The existing Cloudflare Workers configuration remains available as an optional alternative.
 
 ## Quality constraints
@@ -56,6 +58,7 @@ Build Ruslan Khairullin's English-only product-design portfolio from the latest 
 - `astro check`: zero errors, warnings, or hints.
 - Production build: successful static output for `/` and `/404.html`.
 - GitHub Pages production workflow: successful at `https://ruslan-flueda.github.io/portfolio-fluedea/`; pnpm is pinned to `11.19.0` for reproducible future deployments.
+- PostHog project: US cloud, anonymous profiles only; the live production event stream must be verified after the analytics deployment reaches GitHub Pages.
 - Browser QA viewport: 1440 x 900 px.
 - Rendered page width: 1440 px; rendered height: 5134 px (equal to the Figma reference frame).
 - Local Ramabhadra font, live time, project controls, contact links, reduced-motion fallbacks, independent parallax transforms, and deterministic status-strip mutation verified in the browser.

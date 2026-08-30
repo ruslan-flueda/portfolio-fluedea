@@ -1,5 +1,9 @@
 # Changelog
 
+## 2026-08-30
+
+- Connected the portfolio to the supplied PostHog US project with asynchronous Web Analytics, autocapture, page-leave measurement, and session replay. Added explicit anonymous events for project visibility, three-second engagement, dwell duration, card clicks, contact destinations, scroll-depth milestones, and footer reach without changing the visual layout.
+
 ## 2026-08-29
 
 - Pinned pnpm `11.19.0` after the first successful GitHub Pages release so subsequent automated builds no longer depend on an unspecified latest package-manager version.

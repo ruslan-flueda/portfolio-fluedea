@@ -24,6 +24,8 @@ const projects = (await getCollection('projects', ({ data }) => data.published))
           type={data.href ? undefined : 'button'}
           aria-label={data.href ? label : `${label} Case study coming soon.`}
           data-status={data.status}
+          data-analytics-project={data.title}
+          data-analytics-project-size={data.size}
         >
           <div class:list={['project-card__media', processRibbon && `project-card__media--${processRibbon}`]}>
             <img

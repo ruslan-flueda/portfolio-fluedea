@@ -25,8 +25,63 @@ const faviconHref = `${baseUrl}favicon.png`;
     <meta name="color-scheme" content="dark" />
     <link rel="icon" type="image/png" sizes="328x328" href={faviconHref} />
     <title>{title}</title>
+    <script is:inline>
+      !(function (t, e) {
+        var o, n, p, r;
+        e.__SV ||
+          (window.posthog && window.posthog.__loaded) ||
+          ((window.posthog = e),
+          (e._i = []),
+          (e.init = function (i, s, a) {
+            function g(t, e) {
+              var o = e.split('.');
+              2 == o.length && ((t = t[o[0]]), (e = o[1]));
+              t[e] = function () {
+                t.push([e].concat(Array.prototype.slice.call(arguments, 0)));
+              };
+            }
+            p ||
+              (((p = t.createElement('script')).type = 'text/javascript'),
+              (p.crossOrigin = 'anonymous'),
+              (p.async = !0),
+              (p.src =
+                s.api_host.replace('.i.posthog.com', '-assets.i.posthog.com') +
+                '/static/array.js'),
+              (p.onerror = function () {
+                p = null;
+              }),
+              (r = t.getElementsByTagName('script')[0]).parentNode.insertBefore(p, r));
+            for (
+              var u = e,
+                methods =
+                  'capture identify reset startSessionRecording stopSessionRecording opt_in_capturing opt_out_capturing has_opted_in_capturing has_opted_out_capturing'.split(
+                    ' ',
+                  ),
+                index = 0;
+              index < methods.length;
+              index++
+            )
+              g(u, methods[index]);
+            e._i.push([i, s, a]);
+          }),
+          (e.__SV = 1));
+      })(document, window.posthog || []);
+
+      posthog.init('phc_p5VqJwLhoMpeYjLciqsL6LB66UEL3BU8LxUf7dKa8j2v', {
+        api_host: 'https://us.i.posthog.com',
+        defaults: '2026-05-30',
+        person_profiles: 'identified_only',
+        capture_pageview: true,
+        capture_pageleave: true,
+        autocapture: true,
+        disable_session_recording: false,
+      });
+    </script>
   </head>
   <body>
     <slot />
+    <script>
+      import '@/scripts/analytics';
+    </script>
   </body>
 </html>
